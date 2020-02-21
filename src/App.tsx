@@ -12,6 +12,14 @@ function App() {
     height: "100vh",
     overflow: "hidden"
   };
+  const creditCardStyle = {
+    backgroundImage: "url('image/1.jpeg')",
+    backgroundSize: "cover",
+    borderRadius: "10px",
+    height: "230px",
+    width: "400px",
+    margin: "-700px auto"
+  };
   const paperStyle = {
     backgroundColor: "white",
     margin: "100px auto",
@@ -88,6 +96,7 @@ function App() {
             </Button>
           </div>
         </Paper>
+        <Paper elevation={8} style={creditCardStyle} />
       </Container>
     </div>
   );
