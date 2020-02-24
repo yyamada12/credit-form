@@ -10,13 +10,17 @@ interface AppPropsInterface {}
 
 interface AppStateInterface {
   cardNumber: string;
+  cardName: string;
+  cw: string;
 }
 
 class App extends React.Component<AppPropsInterface, AppStateInterface> {
   constructor(props: AppPropsInterface) {
     super(props);
     this.state = {
-      cardNumber: ""
+      cardNumber: "",
+      cardName: "",
+      cw: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -94,9 +98,12 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
               />
               <TextField
                 required
+                name="cardName"
                 label="Card Name"
                 variant="outlined"
                 style={this.cardNameFormStyle}
+                value={this.state.cardName}
+                onChange={this.handleChange}
               />
               <Select
                 label="Expiration Month"
@@ -111,9 +118,12 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
               />
               <TextField
                 required
+                name="cw"
                 label="CW"
                 variant="outlined"
                 style={this.CWFormStyle}
+                value={this.state.cw}
+                onChange={this.handleChange}
               />
               <Button
                 variant="contained"
