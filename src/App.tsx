@@ -1,16 +1,20 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
-import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 interface AppPropsInterface {}
 
 interface AppStateInterface {
   cardNumber: string;
   cardName: string;
+  expireMonth: string;
   cw: string;
 }
 
@@ -20,10 +24,12 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
     this.state = {
       cardNumber: "",
       cardName: "",
+      expireMonth: "",
       cw: ""
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeTextField = this.handleChangeTextField.bind(this);
+    this.handleChangeSelect = this.handleChangeSelect.bind(this);
   }
 
   containerStyle = {
@@ -74,12 +80,34 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
     width: "100%",
     height: "50px"
   };
-  handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+  handleChangeTextField(event: React.ChangeEvent<HTMLTextAreaElement>) {
     const target = event.target;
     this.setState(() => {
       return { ...this.state, [target.name]: target.value };
     });
   }
+  handleChangeSelect(
+    event: React.ChangeEvent<{
+      name?: string | undefined;
+      value: unknown;
+    }>
+  ) {
+    const target = event.target;
+    const name = target.name;
+    console.log(target.name, target.value);
+    if (name) {
+      this.setState(() => {
+        return { ...this.state, [name]: target.value };
+      });
+    }
+  }
+
+  monthSelection = [...Array(12)].map((_, i) => (
+    <MenuItem key={i} value={String(i + 1)}>
+      {String(i + 1).padStart(2, "0")}
+    </MenuItem>
+  ));
+
   render() {
     return (
       <div className="App">
@@ -94,7 +122,7 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
                 variant="outlined"
                 style={this.cardNumberFormStyle}
                 value={this.state.cardNumber}
-                onChange={this.handleChange}
+                onChange={this.handleChangeTextField}
               />
               <TextField
                 required
@@ -103,13 +131,19 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
                 variant="outlined"
                 style={this.cardNameFormStyle}
                 value={this.state.cardName}
-                onChange={this.handleChange}
+                onChange={this.handleChangeTextField}
               />
-              <Select
-                label="Expiration Month"
-                variant="outlined"
-                style={this.expireMonthSelectStyle}
-              />
+              <FormControl variant="outlined" style={{ width: "35%" }}>
+                <InputLabel>Expire Month</InputLabel>
+                <Select
+                  name="expireMonth"
+                  style={this.expireMonthSelectStyle}
+                  value={this.state.expireMonth}
+                  onChange={this.handleChangeSelect}
+                >
+                  {this.monthSelection}
+                </Select>
+              </FormControl>
               <Select
                 required
                 label="Expiration Year"
@@ -123,7 +157,7 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
                 variant="outlined"
                 style={this.CWFormStyle}
                 value={this.state.cw}
-                onChange={this.handleChange}
+                onChange={this.handleChangeTextField}
               />
               <Button
                 variant="contained"
