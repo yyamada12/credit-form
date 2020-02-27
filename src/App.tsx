@@ -15,6 +15,7 @@ interface AppStateInterface {
   cardNumber: string;
   cardName: string;
   expireMonth: string;
+  expireYear: string;
   cw: string;
 }
 
@@ -25,6 +26,7 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
       cardNumber: "",
       cardName: "",
       expireMonth: "",
+      expireYear: "",
       cw: ""
     };
 
@@ -94,7 +96,6 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
   ) {
     const target = event.target;
     const name = target.name;
-    console.log(target.name, target.value);
     if (name) {
       this.setState(() => {
         return { ...this.state, [name]: target.value };
@@ -105,6 +106,12 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
   monthSelection = [...Array(12)].map((_, i) => (
     <MenuItem key={i} value={String(i + 1)}>
       {String(i + 1).padStart(2, "0")}
+    </MenuItem>
+  ));
+
+  yearSelection = [...Array(12)].map((_, i) => (
+    <MenuItem key={i} value={String(i + 2020)}>
+      {i + 2020}
     </MenuItem>
   ));
 
@@ -136,6 +143,7 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
               <FormControl variant="outlined" style={{ width: "35%" }}>
                 <InputLabel>Expire Month</InputLabel>
                 <Select
+                  required
                   name="expireMonth"
                   style={this.expireMonthSelectStyle}
                   value={this.state.expireMonth}
@@ -144,12 +152,19 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
                   {this.monthSelection}
                 </Select>
               </FormControl>
-              <Select
-                required
-                label="Expiration Year"
-                variant="outlined"
-                style={this.expireYearSelectStyle}
-              />
+              <FormControl variant="outlined" style={{ width: "35%" }}>
+                <InputLabel>Expire Year</InputLabel>
+                <Select
+                  required
+                  name="expireYear"
+                  style={this.expireYearSelectStyle}
+                  value={this.state.expireYear}
+                  onChange={this.handleChangeSelect}
+                >
+                  {this.yearSelection}
+                </Select>
+              </FormControl>
+
               <TextField
                 required
                 name="cw"
