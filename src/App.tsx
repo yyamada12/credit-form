@@ -75,7 +75,8 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
   };
   CWFormStyle = {
     marginTop: "10px",
-    marginRight: "10px"
+    marginRight: "10px",
+    width: "25%"
   };
   buttonStyle = {
     marginTop: "30px",
