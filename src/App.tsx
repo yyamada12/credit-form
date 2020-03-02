@@ -4,6 +4,7 @@ import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 
 import CreditForm from "./CreditForm";
+import CreditCard from "./CreditCard";
 
 interface AppPropsInterface {}
 
@@ -34,14 +35,6 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
     backgroundColor: "#cfe8fc",
     height: "100vh",
     overflow: "hidden"
-  };
-  creditCardStyle = {
-    backgroundImage: "url('image/1.jpeg')",
-    backgroundSize: "cover",
-    borderRadius: "10px",
-    height: "230px",
-    width: "400px",
-    margin: "-700px auto"
   };
 
   handleChangeTextField(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -75,7 +68,7 @@ class App extends React.Component<AppPropsInterface, AppStateInterface> {
             handleChangeTextField={this.handleChangeTextField}
             handleChangeSelect={this.handleChangeSelect}
           />
-          <Paper elevation={8} style={this.creditCardStyle} />
+          <CreditCard cardInfo={this.state} />
         </Container>
       </div>
     );
