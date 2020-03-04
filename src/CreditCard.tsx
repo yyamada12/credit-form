@@ -11,16 +11,25 @@ interface IProps {
   };
 }
 
-export default (props: IProps) => (
-  <Paper elevation={8} style={creditCardStyle}>
-    <div style={containerStyle}>
-      <div style={topContainerStyle}>
-        <img src="image/chip.png" alt="chip" style={chipStyle} />
-        <img src="image/jcb.png" alt="logo" style={logoStyle} />
+export default (props: IProps) => {
+  const maskedCardNumber =
+    props.cardInfo.cardNumber +
+    "#### #### #### ####".slice(props.cardInfo.cardNumber.length, 19);
+  const cardNumberChars = maskedCardNumber
+    .split("")
+    .map((c, i) => <span key={i}>{c}</span>);
+  return (
+    <Paper elevation={8} style={creditCardStyle}>
+      <div style={containerStyle}>
+        <div style={topContainerStyle}>
+          <img src="image/chip.png" alt="chip" style={chipStyle} />
+          <img src="image/jcb.png" alt="logo" style={logoStyle} />
+        </div>
+        <div style={middleContainerStyle}>{cardNumberChars}</div>
       </div>
-    </div>
-  </Paper>
-);
+    </Paper>
+  );
+};
 
 const creditCardStyle = {
   backgroundImage: "url('image/1.jpeg')",
@@ -46,4 +55,12 @@ const logoStyle = {
 const topContainerStyle = {
   display: "flex",
   justifyContent: "space-between"
+};
+
+const middleContainerStyle = {
+  marginTop: "50px",
+  display: "flex",
+  justifyContent: "space-between",
+  color: "white",
+  fontSize: "25px"
 };
